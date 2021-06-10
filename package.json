@@ -1,0 +1,40 @@
+{
+  "name": "instaclone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon --exec npx babel-node server.js --delay 2s",
+    "mig": "npx prisma migrate dev",
+    "studio": "npx prisma studio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wow-woo/instaclone-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wow-woo/instaclone-backend/issues"
+  },
+  "homepage": "https://github.com/wow-woo/instaclone-backend#readme",
+  "dependencies": {
+    "@graphql-tools/merge": "^6.2.14",
+    "@prisma/client": "^2.23.0",
+    "apollo-server": "^2.25.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.5",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
+    "nodemon": "^2.0.7",
+    "prisma": "^2.23.0"
+  }
+}
