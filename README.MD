@@ -95,9 +95,34 @@ commentary: String
 
 scalar Date
 
-#### graphql Upload scalar type
+#### graphql Upload
 
-- build-in type for file uploading of apollo server
+- Upload scalar type
+  build-in type for file uploading of apollo server
+- Upload : createReadStream fn error
+- add into package.json
+
+1.  "resolutions": {
+    "fs-capacitor": "^6.2.0",
+    "graphql-upload": "^11.0.0"
+    }
+2.  npx npm-force-resolutions
+
+### file system
+
+- readStream
+  it could read file stream
+
+- writeStream from 'fs'
+  it could create file stream
+- readStream pipes to writeStream. then, writeStream would save the file.
+
+### apollo-server-express
+
+- topping apollo server on /graphql url on express server
+  import {graphqlExpress } from 'apollo-server-express'
+- this is NOT just a apollo server. so it is more flexible and functional
+- set Routers, expose endpoints
 
 #### Yvfgf naq Aba-Ahyy
 

@@ -1,4 +1,5 @@
 import client from "../../../prismaClient";
+import fs from "fs";
 import bcrypt from "bcrypt";
 import { protectResolver } from "../users.utils";
 
@@ -13,7 +14,15 @@ const editProfile = async (
   { userName, email, firstName, lastName, password, bio, avatar },
   { loggedInUser }
 ) => {
-  console.log("avatar ", avatar);
+  const { filename, createReadStream } = await avatar;
+  // reading file stream with readStream obj
+  const streamReader = createReadStream();
+  // save file
+  const streamWriter = fs.createWriteStream(
+    process.cwd() + "\\uploads\\" + filename
+  );
+  // pipe file stream
+  streamReader.pipe(streamWriter);
 
   password = hashPw(password);
 
@@ -28,7 +37,7 @@ const editProfile = async (
         firstName,
         lastName,
         bio,
-        avatar,
+        avatar: process.cwd() + "\\uploads\\" + filename,
         password,
       },
     });
@@ -44,6 +53,7 @@ const editProfile = async (
       };
     }
   } catch (error) {
+    console.log("error", error);
     return {
       ok: false,
       error: "Failed to update",
