@@ -18,13 +18,12 @@ const apolloServer = new ApolloServer({
     };
   },
 });
+app.use(logger("tiny"));
 
-apolloServer.applyMiddleware({ app });
-
-app.set("/uploads", process.cwd() + "\\uploads");
-
-app.use(logger("sdfsf"));
+app.use("/static", express.static("uploads"));
 
 app.listen({ port: process.env.PORT }, () =>
   console.log("apollo-server-express is running on ", process.env.PORT)
 );
+
+apolloServer.applyMiddleware({ app });

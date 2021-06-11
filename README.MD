@@ -124,6 +124,17 @@ scalar Date
 - this is NOT just a apollo server. so it is more flexible and functional
 - set Routers, expose endpoints
 
+### express server
+
+#### expose static files
+
+- app.use(endpoint, assetRoute)
+  app.use('static', express.static('uploads'))
+
+### morgan logger
+
+- set morgan middleware to log network request
+
 #### Yvfgf naq Aba-Ahyy
 
 type Character {

@@ -9,23 +9,35 @@ const hashPw = (pw) => {
   return bcrypt.hashSync(pw, 10);
 };
 
+const getAvatar = async (avatar, id) => {
+  if (!avatar) {
+    return undefined;
+  }
+
+  const { filename, createReadStream } = await avatar;
+
+  const uniqueFileName = id + "_" + Date.now() + "_" + filename;
+
+  // reading file stream with readStream obj
+  const streamReader = createReadStream();
+  // save file
+  const streamWriter = fs.createWriteStream(
+    process.cwd() + "\\uploads\\" + uniqueFileName
+  );
+  // pipe file stream
+  streamReader.pipe(streamWriter);
+
+  return "static\\" + uniqueFileName;
+};
+
 const editProfile = async (
   _,
   { userName, email, firstName, lastName, password, bio, avatar },
   { loggedInUser }
 ) => {
-  const { filename, createReadStream } = await avatar;
-  // reading file stream with readStream obj
-  const streamReader = createReadStream();
-  // save file
-  const streamWriter = fs.createWriteStream(
-    process.cwd() + "\\uploads\\" + filename
-  );
-  // pipe file stream
-  streamReader.pipe(streamWriter);
+  const uniqueFileName = await getAvatar(avatar, loggedInUser.id);
 
   password = hashPw(password);
-
   try {
     const updatedUser = await client.user.update({
       where: {
@@ -37,7 +49,7 @@ const editProfile = async (
         firstName,
         lastName,
         bio,
-        avatar: process.cwd() + "\\uploads\\" + filename,
+        avatar: uniqueFileName,
         password,
       },
     });
