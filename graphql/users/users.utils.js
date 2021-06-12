@@ -28,3 +28,15 @@ export const protectResolver = (resolver) => (root, args, context, info) => {
 
   return resolver(root, args, context, info);
 };
+
+export const verifyTarget = async (targetName, loggedInUser) => {
+  const targetPresent = await client.user.findUnique({
+    where: {
+      userName: targetName,
+    },
+  });
+
+  if (!targetPresent) return false;
+
+  return targetPresent.id != loggedInUser.id ? true : false;
+};

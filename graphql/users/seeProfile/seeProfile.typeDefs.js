@@ -1,12 +1,12 @@
 import { gql } from "apollo-server-core";
 
-//   id Int @id @default(autoincrement())
-//   userName String @unique
-//   email String @unique
-//   firstName String
-//   lastName String?
-//   password String
 export default gql`
+  type seeProfileResult {
+    ok: Boolean!
+    user: User
+    error: String
+  }
+
   type User {
     id: Int!
     userName: String!
@@ -15,11 +15,13 @@ export default gql`
     lastName: String
     bio: String
     avatar: String
+    following: [User]
+    follower: [User]
     createdAt: String!
     updatedAt: String!
   }
 
   type Query {
-    seeProfile(userName: String): User
+    seeProfile(userName: String!): seeProfileResult
   }
 `;

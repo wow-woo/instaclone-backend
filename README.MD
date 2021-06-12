@@ -168,6 +168,27 @@ appearsIn: [Episode]!
   visual editor server running on browser
 - you can CRUD on database
 
+### prisma client
+
+- where
+  specify target
+
+- include
+  retrieve relations
+
+- data
+  specify data that you want to work with
+
+### how to retrieve relations with prisma
+
+1. include property
+2. entityPromise.subRelationName() fn
+
+### pagination with prisma
+
+1. offset pagination
+2. cursor-based pagination
+
 ### graphql-tools
 
 - npm i graphql-tools
@@ -187,3 +208,8 @@ appearsIn: [Episode]!
 Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 
 - npm i dotenv
+
+### self relation
+
+- many to many self relation
+  follower and following

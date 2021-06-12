@@ -1,10 +1,15 @@
 import client from "../../../prismaClient";
 import { protectResolver } from "../users.utils";
 
-const seeProfile = (_, { userName }) => {
-  return client.user.findUnique({
+const seeProfile = async (_, { userName }) => {
+  const user = await client.user.findUnique({
     where: { userName },
   });
+
+  return {
+    ok: true,
+    user,
+  };
 };
 
 export default {
