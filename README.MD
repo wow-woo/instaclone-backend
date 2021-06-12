@@ -119,7 +119,39 @@ scalar Date
 
 ### graphql computed field
 
--
+- object type could be root
+- root is relative
+- type User is root for id and userName
+- every field could have a resolver
+- sub-field resolver could access to value of resolved root with root parameter.
+
+  type User {
+  id
+  userName
+  }
+
+User : root field
+id : sub field
+
+#### field resolving flow
+
+1. receive a query.
+2. root is resolved.
+3. look if there is resolvers for sub-fields.
+4. if there is a resolver for the field,
+   resolved value of root is passed to sub-field
+5. all possible sub-fields are resolved.
+6. fill or overwrite the field with value
+7. all possible field is being resolved. the query is resolved.
+
+- graphql query
+
+  <!-- query{         >>> being resolved 1 -->
+  <!--  seeProfile{      >>> being resolved 2 -->
+  <!--    id                 >>> being resolved 3 -->
+  <!--    userName             >>> being resolved 4 -->
+  <!--  } -->
+  <!-- } -->
 
 ### apollo-server-express
 

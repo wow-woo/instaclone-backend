@@ -7,20 +7,6 @@ export default gql`
     error: String
   }
 
-  type User {
-    id: Int!
-    userName: String!
-    email: String!
-    firstName: String!
-    lastName: String
-    bio: String
-    avatar: String
-    following: [User]
-    follower: [User]
-    createdAt: String!
-    updatedAt: String!
-  }
-
   type Query {
     seeProfile(userName: String!): seeProfileResult
   }
