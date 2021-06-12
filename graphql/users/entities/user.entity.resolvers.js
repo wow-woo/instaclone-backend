@@ -2,23 +2,40 @@ import client from "../../../prismaClient";
 
 export default {
   User: {
-    totalFollowing: async (root) => {
+    totalFollowing: async ({ id }) => {
       return await client.user.count({
         where: {
           follower: {
             some: {
-              id: root.id,
+              id,
             },
           },
         },
       });
     },
-    totalFollower: async (root) => {
+    totalFollower: async ({ id }) => {
       return await client.user.count({
         where: {
           following: {
             some: {
-              id: root.id,
+              id,
+            },
+          },
+        },
+      });
+    },
+    isMe: ({ id }, _, { loggedInUser: { id: loggedInId } }) => {
+      return id === loggedInId;
+    },
+    isFollowing: async ({ id }, _, { loggedInUser: { id: loggedInId } }) => {
+      if (!loggedInId) return false;
+
+      return await client.user.count({
+        where: {
+          id: loggedInId,
+          following: {
+            some: {
+              id,
             },
           },
         },

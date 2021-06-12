@@ -260,6 +260,20 @@ Dotenv is a zero-dependency module that loads environment variables from a .env 
 
 - npm i dotenv
 
+## prisma relation
+
+- many to many : No need of @relation
+- one to many : Add @relation to many part of entity
+
+  entities : user - photo
+
+  userId field is needed in photo entity
+
+  model Photo {
+  userId Int
+  user User @relation(fields:[userId], references:[id])
+  }
+
 ### self relation
 
 - many to many self relation

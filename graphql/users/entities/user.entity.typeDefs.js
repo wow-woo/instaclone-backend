@@ -14,10 +14,10 @@ export default gql`
     createdAt: String!
     updatedAt: String!
 
-    # computed fileds
+    # computed fields
     totalFollowing: Int
     totalFollower: Int
-    # isFollowing: Boolean!
-    # isMe: Boolean!
+    isFollowing: Boolean!
+    isMe: Boolean!
   }
 `;
