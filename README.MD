@@ -117,6 +117,10 @@ scalar Date
   it could create file stream
 - readStream pipes to writeStream. then, writeStream would save the file.
 
+### graphql computed field
+
+-
+
 ### apollo-server-express
 
 - topping apollo server on /graphql url on express server
@@ -184,9 +188,24 @@ appearsIn: [Episode]!
 1. include property
 2. entityPromise.subRelationName() fn
 
+### Prisma Relation filters
+
+Filter records by field of Related table's records
+
+- every
+- some : all records, that some records of related table have the value in specific filed
+  Returns all records where one or more ("some") related records match filtering criteria.
+- none
+
 ### pagination with prisma
 
 1. offset pagination
+
+- easy to skip and take amount of records that you want
+- jump to specific page
+- traverse all the records to skip
+- you can paginate the sam result set in any sort order
+
 2. cursor-based pagination
 
 ### graphql-tools

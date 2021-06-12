@@ -4,23 +4,46 @@ export default {
   Query: {
     seeFollowers: async (_, { userName, page }, { loggedInUser }) => {
       try {
-        const followers = await client.user
-          .findUnique({
-            where: {
-              userName,
+        const user = client.user.findUnique({
+          where: {
+            userName,
+          },
+          select: {
+            follower: true,
+          },
+        });
+
+        if (!(await user)) {
+          return {
+            ok: false,
+            error: "No user found",
+          };
+        }
+
+        const followers = await user.follower({
+          skip: (page - 1) * 5,
+          take: 5,
+        });
+
+        const totalPages = await client.user.count({
+          where: {
+            following: {
+              some: {
+                userName,
+              },
             },
-          })
-          .follower({
-            skip: (page - 1) * 5 - 1 < 0 ? 0 : (page - 1) * 5 - 1,
-            take: 5,
-          });
+          },
+        });
 
         return {
           ok: true,
           followers,
+          currentPage: page,
+          totalPages: Math.ceil(totalPages / 5),
         };
       } catch (error) {
         console.log("e ", error);
+
         return {
           ok: false,
           error: "Failed to bring followers",

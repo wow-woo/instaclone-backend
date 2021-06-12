@@ -5,6 +5,7 @@ export default gql`
     ok: Boolean!
     error: String
     followers: [User]
+    currentPage: Int
     totalPages: Int
   }
 
