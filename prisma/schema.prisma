@@ -20,6 +20,8 @@ model User {
   avatar String?
   phots Photo[]
   password String
+  likes Like[]
+  comments Comment[]
   following User[] @relation("followship", references:[id])
   follower User[] @relation("followship", references:[id])
   createdAt DateTime @default(now())
@@ -29,19 +31,46 @@ model User {
 model Photo {
   id Int @id @default(autoincrement())
   imageAddress String
+  caption String?
   userId Int
-
-  //join table and referencing info
   user User @relation(fields: [userId], references:[id])
   hashTags HashTag[]
+  likes Like[]
+  comments Comment[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model HashTag {
   id Int @id @default(autoincrement())
-  text String
+  text String @unique
   photos Photo[] 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+  photoId Int
+  userId Int
+  photo Photo @relation(fields: [photoId], references:[id])
+  user User @relation(fields: [userId], references:[id])
+  createadAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([photoId, userId])
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  payload String
+  photoId Int
+  userId Int
+  user User @relation(fields: [userId], references:[id])
+  photo Photo @relation(fields: [photoId], references:[id])
+  createadAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([photoId, userId])
+
 }

@@ -1,4 +1,5 @@
 import client from "../../../prismaClient";
+import { getNextPage } from "../users.utils";
 
 export default {
   Query: {
@@ -29,20 +30,15 @@ export default {
             take: takeNumber,
           });
         };
+
         const following = await takeAfter(user, afterId);
 
-        const has_next_page = false;
-
-        if (following.length >= takeNumber) {
-          const nextPage = await takeAfter(
-            user,
-            following[following.length - 1].id
-          ).length;
-
-          if (nextPage.length > 0) {
-            has_next_page = true;
-          }
-        }
+        const has_next_page = await getNextPage(
+          takeAfter,
+          takeNumber,
+          following,
+          user
+        );
 
         return {
           ok: true,

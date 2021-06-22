@@ -262,8 +262,14 @@ Dotenv is a zero-dependency module that loads environment variables from a .env 
 
 ## prisma relation
 
+[!] prisma offers additional relation features
+user filed No exist in that entity table, generate join table. prisma provides like fields in one table for you
+
+- many to many (self referencing) : @relation on field of both entity
 - many to many : No need of @relation
+
 - one to many : Add @relation to many part of entity
+  [!] information for join table
 
   entities : user - photo
 
@@ -278,3 +284,13 @@ Dotenv is a zero-dependency module that loads environment variables from a .env 
 
 - many to many self relation
   follower and following
+
+### prisma connectOrCreate
+
+- you can use connectOrCreate on a field, that is @unique only
+- conditional creating record
+
+### prisma compound unique
+
+- @@unique([fieldName, fieldName])
+  both should be unique, No duplicates

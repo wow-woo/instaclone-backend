@@ -1,5 +1,57 @@
 import jwt from "jsonwebtoken";
 import client from "../../prismaClient";
+import fs from "fs";
+
+export const getNextPage = async (
+  takeAfter,
+  takeNumber,
+  current,
+  promiseTable
+) => {
+  if (current.length < takeNumber) return false;
+
+  const nextPage = await takeAfter(promiseTable, current[current.length - 1].id)
+    .length;
+
+  if (nextPage.length > 0) {
+    return true;
+  }
+};
+
+export const parseForHashTag = (str) => {
+  if (!str) return [];
+
+  const reg = /[＃|#][ㄱ-ㅎ|ㅏ-ㅣ|가-힣|ぁ-んァ-ン|一-龯|\w]+/g;
+  return str.match(reg).map((text) => {
+    return {
+      where: {
+        text: text.slice(1, text.length),
+      },
+      create: { text: text.slice(1, text.length) },
+    };
+  });
+};
+
+export const getUpload = async (type, fileUpload, id) => {
+  if (!fileUpload) {
+    return undefined;
+  }
+
+  const { filename, createReadStream } = await fileUpload;
+
+  const uniqueFileName = type + "_" + id + "_" + Date.now() + "_" + filename;
+
+  // reading file stream with readStream obj
+  const streamReader = createReadStream();
+  // save file
+  const streamWriter = fs.createWriteStream(
+    process.cwd() + "\\uploads\\" + uniqueFileName
+  );
+  // pipe file stream
+  streamReader.pipe(streamWriter);
+
+  return "static\\" + uniqueFileName;
+};
 
 export const getUser = async (token) => {
   let result = null;

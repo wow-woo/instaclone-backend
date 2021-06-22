@@ -1,6 +1,11 @@
 require("dotenv").config();
 import { typeDefs, resolvers } from "./graphql/schema.js";
-import { getUser, protectResolver } from "./graphql/users/users.utils.js";
+import {
+  getUser,
+  protectResolver,
+  getUpload,
+  parseForHashTag,
+} from "./graphql/users/users.utils.js";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import logger from "morgan";
@@ -13,6 +18,8 @@ const apolloServer = new ApolloServer({
   resolvers,
   context: async ({ req }) => {
     return {
+      parseForHashTag,
+      getUpload,
       protectResolver,
       loggedInUser: await getUser(req?.headers?.token),
     };
