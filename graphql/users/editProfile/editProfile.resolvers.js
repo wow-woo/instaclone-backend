@@ -1,6 +1,7 @@
 import client from "../../../prismaClient";
 import bcrypt from "bcrypt";
 import { protectResolver } from "../users.utils";
+import { AWSUpload } from "../../../shared/aws_s3.utils";
 
 const hashPw = (pw) => {
   if (!pw) return pw;
@@ -11,9 +12,10 @@ const hashPw = (pw) => {
 const editProfile = async (
   _,
   { userName, email, firstName, lastName, password, bio, avatar },
-  { loggedInUser, getUpload }
+  { loggedInUser }
 ) => {
-  const uniqueFileName = await getUpload("avatar", avatar, loggedInUser.id);
+  const uniqueFileName = await AWSUpload("avatar", avatar, loggedInUser.id);
+  // const uniqueFileName = await getUpload("avatar", avatar, loggedInUser.id);
 
   password = hashPw(password);
   try {

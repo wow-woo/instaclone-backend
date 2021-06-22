@@ -1,21 +1,21 @@
 import client from "../../../prismaClient";
+import { AWSUpload } from "../../../shared/aws_s3.utils";
 import { parseForHashTag, protectResolver } from "../../users/users.utils";
 
 const uploadPhoto = async (
   _,
   { upload, caption },
-  { getUpload, loggedInUser: { id } }
+  { loggedInUser: { id } }
 ) => {
   try {
-    console.log(upload);
-    console.log("caption ", caption);
     let hashTagsObj = null;
 
     if (parseForHashTag(caption)) {
       hashTagsObj = parseForHashTag(caption);
     }
 
-    const imageAddress = await getUpload("photo", upload, id);
+    const imageAddress = await AWSUpload("photo", upload, id);
+    // const imageAddress = await getUpload("photo", upload, id);
 
     const photo = await client.photo.create({
       data: {
@@ -34,8 +34,6 @@ const uploadPhoto = async (
         // : { hashTags: [] }),
       },
     });
-
-    console.log("photo ", photo);
 
     return {
       ok: true,

@@ -3,15 +3,27 @@ import { protectResolver } from "../../users/users.utils";
 
 const createComment = async (_, { photoId, payload }, { loggedInUser }) => {
   try {
-    const photoCount = await client.photo.count({
+    const photo = await client.photo.findUnique({
       where: { id: photoId },
     });
 
-    if (!photoCount)
+    if (!photo)
       return {
         ok: false,
         error: "No photo found",
       };
+
+    if (
+      await client.comment.findUnique({
+        where: { photoId_userId: { photoId, userId: loggedInUser.id } },
+      })
+    )
+      return {
+        ok: false,
+        error: "No more comment allowed on this photo",
+      };
+
+    console.log("a");
 
     await client.comment.create({
       data: {
@@ -28,6 +40,8 @@ const createComment = async (_, { photoId, payload }, { loggedInUser }) => {
         payload,
       },
     });
+
+    console.log("b");
 
     return {
       ok: true,

@@ -297,6 +297,8 @@ user filed No exist in that entity table, generate join table. prisma provides l
 
 ## Prisma 2.0 onDelete
 
+### @paljs/plugins
+
 - cascade / set null are not supported
 - npm i @paljs/plugins
   [1] put either of those above of relation field in schema of prisma
@@ -311,3 +313,11 @@ user filed No exist in that entity table, generate join table. prisma provides l
   where: { id: photoId },
   deleteParent: true,
   })
+
+## AWS SDK for Javascript
+
+- npm i aws-sdk
+
+### AWS S3
+
+- Simple Storage Service

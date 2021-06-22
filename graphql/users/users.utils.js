@@ -22,6 +22,13 @@ export const parseForHashTag = (str) => {
   if (!str) return [];
 
   const reg = /[＃|#][ㄱ-ㅎ|ㅏ-ㅣ|가-힣|ぁ-んァ-ン|一-龯|\w]+/g;
+
+  if (!str.match(reg)) {
+    return [];
+  }
+
+  console.log("ddddd", str.match(reg));
+
   return str.match(reg).map((text) => {
     return {
       where: {
