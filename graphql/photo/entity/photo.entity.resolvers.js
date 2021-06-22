@@ -31,5 +31,13 @@ export default {
         where: { id, userId: loggedInUser.id },
       });
     },
+
+    totalComments: async ({ id }) => {
+      return await client.comment.count({
+        where: {
+          photoId: id,
+        },
+      });
+    },
   },
 };

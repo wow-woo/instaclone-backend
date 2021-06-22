@@ -10,6 +10,7 @@ export default gql`
     hashTags: [HashTag]
     totalLikes: Int
     isMine: Boolean
+    totalComments: Int
     createdAt: String!
     updatedAt: String!
   }
