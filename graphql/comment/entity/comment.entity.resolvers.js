@@ -1,7 +1,9 @@
 export default {
   Comment: {
-    isMine: ({ userId }, { loggedInUser: id }) => {
-      return userId === id;
+    isMine: ({ userId }, { loggedInUser }) => {
+      if (!loggedInUser) return false;
+
+      return userId === loggedInUser.id;
     },
   },
 };

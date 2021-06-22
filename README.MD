@@ -294,3 +294,20 @@ user filed No exist in that entity table, generate join table. prisma provides l
 
 - @@unique([fieldName, fieldName])
   both should be unique, No duplicates
+
+## Prisma 2.0 onDelete
+
+- cascade / set null are not supported
+- npm i @paljs/plugins
+  [1] put either of those above of relation field in schema of prisma
+  /// @onDelete(CASCADE)
+  /// @onDelete(SET_NULL)
+
+[2] delete with PrismaDelete object
+
+- const obj = new PrismaDelete(prismaClient);
+- obj.onDelete({
+  model: "Photo",
+  where: { id: photoId },
+  deleteParent: true,
+  })

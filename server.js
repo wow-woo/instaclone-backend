@@ -9,6 +9,9 @@ import {
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import logger from "morgan";
+import client from "./prismaClient.js";
+import { PrismaDelete } from "@paljs/plugins";
+import { PrismaClient } from "@prisma/client";
 
 const app = express();
 

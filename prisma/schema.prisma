@@ -33,9 +33,13 @@ model Photo {
   imageAddress String
   caption String?
   userId Int
+  /// @onDelete(SET_NULL)
   user User @relation(fields: [userId], references:[id])
+  /// @onDelete(CASCADE)
   hashTags HashTag[]
+  /// @onDelete(CASCADE)
   likes Like[]
+  /// @onDelete(CASCADE)
   comments Comment[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -53,7 +57,9 @@ model Like {
   id Int @id @default(autoincrement())
   photoId Int
   userId Int
+  /// @onDelete(CASCADE)
   photo Photo @relation(fields: [photoId], references:[id])
+  /// @onDelete(SET_NULL)
   user User @relation(fields: [userId], references:[id])
   createadAt DateTime @default(now())
   updatedAt DateTime @updatedAt

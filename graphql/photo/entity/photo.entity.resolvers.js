@@ -24,12 +24,10 @@ export default {
       return await client.like.count({ where: { photoId: id } });
     },
 
-    isMine: async ({ id }, _, { loggedInUser }) => {
-      if (!loggedInUser) return null;
+    isMine: async ({ userId }, _, { loggedInUser }) => {
+      if (!loggedInUser) return false;
 
-      return await !!client.photo.findFirst({
-        where: { id, userId: loggedInUser.id },
-      });
+      return userId === loggedInUser.id;
     },
 
     totalComments: async ({ id }) => {

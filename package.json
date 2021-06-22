@@ -21,6 +21,7 @@
   "homepage": "https://github.com/wow-woo/instaclone-backend#readme",
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
+    "@paljs/plugins": "^3.3.3",
     "@prisma/client": "^2.25.0",
     "apollo-server": "^2.25.0",
     "apollo-server-express": "^2.25.1",
