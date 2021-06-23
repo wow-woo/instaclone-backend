@@ -1,5 +1,6 @@
 import { hashSync } from "bcrypt";
 import client from "../../../prismaClient";
+import { AWSUpload } from "../../../shared/aws_s3.utils";
 
 export default {
   Mutation: {
@@ -25,17 +26,18 @@ export default {
 
         //hash password
         const hashed = hashSync(password, 10);
-        console.log("hashed", hashed);
+
+        const avatarUrl = await AWSUpload("avatars", avatar, 0);
 
         //save on DB and return created User
-        const user = await client.user.create({
+        await client.user.create({
           data: {
             userName,
             email,
             firstName,
             lastName,
             bio,
-            avatar,
+            avatar: avatarUrl,
             password: hashed,
           },
         });

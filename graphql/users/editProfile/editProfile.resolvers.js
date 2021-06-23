@@ -14,7 +14,7 @@ const editProfile = async (
   { userName, email, firstName, lastName, password, bio, avatar },
   { loggedInUser }
 ) => {
-  const uniqueFileName = await AWSUpload("avatar", avatar, loggedInUser.id);
+  const uniqueFileName = await AWSUpload("avatars", avatar, loggedInUser.id);
   // const uniqueFileName = await getUpload("avatar", avatar, loggedInUser.id);
 
   password = hashPw(password);

@@ -14,7 +14,7 @@ const uploadPhoto = async (
       hashTagsObj = parseForHashTag(caption);
     }
 
-    const imageAddress = await AWSUpload("photo", upload, id);
+    const imageAddress = await AWSUpload("uploads", upload, id);
     // const imageAddress = await getUpload("photo", upload, id);
 
     const photo = await client.photo.create({

@@ -22,6 +22,8 @@ model User {
   password String
   likes Like[]
   comments Comment[]
+  rooms Room[] 
+  messages Message[]
   following User[] @relation("followship", references:[id])
   follower User[] @relation("followship", references:[id])
   createdAt DateTime @default(now())
@@ -79,4 +81,24 @@ model Comment {
 
   @@unique([photoId, userId])
 
+}
+
+model Room {
+  id Int @id @default(autoincrement())
+  users User[] 
+  messages Message[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+}
+
+model Message{
+  id Int @id @default(autoincrement())
+  payload String
+  userId Int
+  user User @relation(fields: [userId], references:[id])
+  roomId Int
+  room Room @relation(fields: [roomId], references:[id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

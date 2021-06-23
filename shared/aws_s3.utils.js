@@ -7,15 +7,15 @@ AWS.config.update({
   },
 });
 
-export const AWSUpload = async (type, file, id) => {
+export const AWSUpload = async (folderName, file, id) => {
   console.log("iddddddd ", id);
   const { filename, createReadStream } = await file;
-  const objName = type + "_" + id + "_" + Date.now() + "_" + filename;
+  const objName = folderName + "/" + id + "_" + Date.now() + "_" + filename;
   const readStream = createReadStream();
 
   const { Location } = await new AWS.S3()
     .upload({
-      Bucket: "big-cloud-instaclone",
+      Bucket: process.env.BUCKET,
       Key: objName,
       ACL: "public-read",
       Body: readStream,
