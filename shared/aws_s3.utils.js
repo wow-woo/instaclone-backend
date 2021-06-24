@@ -8,7 +8,6 @@ AWS.config.update({
 });
 
 export const AWSUpload = async (folderName, file, id) => {
-  console.log("iddddddd ", id);
   const { filename, createReadStream } = await file;
   const objName = folderName + "/" + id + "_" + Date.now() + "_" + filename;
   const readStream = createReadStream();

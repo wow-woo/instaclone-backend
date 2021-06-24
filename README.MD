@@ -171,7 +171,7 @@ id : sub field
 
 - set morgan middleware to log network request
 
-#### Yvfgf naq Aba-Ahyy
+####
 
 type Character {
 name: String!

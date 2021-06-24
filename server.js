@@ -17,15 +17,27 @@ const apolloServer = new ApolloServer({
   // schema,
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
-    return {
-      parseForHashTag,
-      getUpload,
-      protectResolver,
-      loggedInUser: await getUser(req?.headers?.token),
-    };
+  context: async ({ req, connection }) => {
+    if (req) {
+      return {
+        parseForHashTag,
+        getUpload,
+        protectResolver,
+        loggedInUser: await getUser(req?.headers?.token),
+      };
+    } else {
+      return {
+        loggedInUser: connection?.context?.loggedInUser,
+      };
+    }
+  },
+  subscriptions: {
+    onConnect: async ({ token }) => {
+      return { loggedInUser: await getUser(token) };
+    },
   },
 });
+
 apolloServer.applyMiddleware({ app });
 
 app.use(logger("tiny"));
@@ -35,6 +47,6 @@ app.use(logger("tiny"));
 const httpServer = http.createServer(app);
 apolloServer.installSubscriptionHandlers(httpServer);
 
-httpServer.listen(4000, () =>
+httpServer.listen(process.env.PORT, () =>
   console.log("apollo-server-express is running on ", process.env.PORT)
 );
