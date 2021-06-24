@@ -9,9 +9,7 @@ import {
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import logger from "morgan";
-import client from "./prismaClient.js";
-import { PrismaDelete } from "@paljs/plugins";
-import { PrismaClient } from "@prisma/client";
+import http from "http";
 
 const app = express();
 
@@ -28,12 +26,15 @@ const apolloServer = new ApolloServer({
     };
   },
 });
+apolloServer.applyMiddleware({ app });
+
 app.use(logger("tiny"));
 
-app.use("/static", express.static("uploads"));
+// app.use("/static", express.static("uploads"));
 
-app.listen({ port: process.env.PORT }, () =>
+const httpServer = http.createServer(app);
+apolloServer.installSubscriptionHandlers(httpServer);
+
+httpServer.listen(4000, () =>
   console.log("apollo-server-express is running on ", process.env.PORT)
 );
-
-apolloServer.applyMiddleware({ app });

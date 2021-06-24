@@ -321,3 +321,15 @@ user filed No exist in that entity table, generate join table. prisma provides l
 ### AWS S3
 
 - Simple Storage Service
+
+## Websocket
+
+subscription based on websocket
+
+- subscript
+- publish
+
+### firefox websocket bug?
+
+- subscription was not working on firefox...
+- websocket connection failed
